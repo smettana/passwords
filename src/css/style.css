@@ -1,0 +1,146 @@
+.login-form {
+  width: 400px;
+  margin: 0 auto;
+}
+.login-form h2 {
+  text-align: center;
+}
+.login-form input {
+  display: block;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  margin-bottom: 30px;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+.login-form input.password-input {
+  width: 250px;
+  display: inline-block;
+}
+.login-form button {
+  display: inline-block;
+}
+.login-form button:last-child {
+  margin-left: 40px;
+}
+.login-form .show-password {
+  display: inline-block;
+  margin-left: 20px;
+}
+.register-form {
+  width: 400px;
+  margin: 0 auto;
+}
+.register-form h2 {
+  text-align: center;
+}
+.register-form input {
+  display: block;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  margin-bottom: 30px;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+.register-form input.password-input {
+  width: 250px;
+  display: inline-block;
+}
+.register-form .show-password {
+  display: inline-block;
+  margin-left: 20px;
+}
+.not-found-wrapper {
+  padding: 0 40px;
+}
+.not-found-wrapper h2 {
+  text-align: center;
+}
+.form-wrapper {
+  width: 800px;
+  margin: 0 auto;
+  padding: 20px 0;
+  border: 1px solid #000;
+}
+.password-edit {
+  width: 400px;
+  margin: 0 auto;
+}
+.password-edit input {
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 0 20px;
+  margin-bottom: 20px;
+  line-height: 40px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+.password-edit button {
+  display: block;
+  width: 200px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+  text-align: center;
+}
+.dasboard-wrapper h2 {
+  padding-bottom: 40px;
+  text-align: center;
+}
+.list-of-passwords {
+  width: 800px;
+  margin: 0 auto;
+  padding: 30px 0 60px;
+}
+.password {
+  border: 1px solid #000;
+  font-size: 0;
+  line-height: 0;
+  padding: 5px 0px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+.password span {
+  display: inline-block;
+  text-align: center;
+  width: 33.333%;
+  font-size: 18px;
+  line-height: 20px;
+  padding: 0 20px 10px;
+  box-sizing: border-box;
+}
+.password input {
+  display: inline-block;
+  width: 33.333%;
+  font-size: 18px;
+  line-height: 20px;
+  padding: 0 20px 10px;
+  text-align: center;
+  border: none;
+  box-sizing: border-box;
+}
+.password a {
+  display: inline-block;
+  font-size: 18px;
+  line-height: 30px;
+  width: 150px;
+  height: 30px;
+  text-align: center;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #000;
+}
+.password a.delete {
+  margin-right: 20px;
+  border: solid 2px #f00;
+}
+.password a.edit {
+  margin-right: 20px;
+  border: solid 2px #00f;
+}
+.password a.show-password {
+  border: solid 2px #008000;
+}
