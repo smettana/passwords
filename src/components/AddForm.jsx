@@ -11,14 +11,14 @@ class AddForm extends React.Component {
         
         if(this.props.editPass === ''){
             if(this.name.value==="" || this.login.value==="" || this.password.value===""){
-                alert('Please enter a correct data');
+                alert('Пожалуйста, заполните все поля');
                 return;
             }else{
                 this.props.addPassword(password);
             }
         }else{
             if(this.name.value==="" || this.login.value==="" || this.password.value===""){
-                alert('Please enter a correct data');
+                alert('Пожалуйста, заполните все поля');
                 return;
             }else{
                 this.props.updatePassword(password);

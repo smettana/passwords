@@ -18,12 +18,13 @@ class LoginForm extends React.Component {
 
 	goToDashbord(e){
 		e.preventDefault();
-		const dashboardId = 'dashboard';
+		// const dashboardId = '24';
 		console.log(localStorage.getItem(this.state.user))
-		if(localStorage.getItem(this.state.user) && localStorage.getItem(this.state.user)===this.state.password){	
-			this.context.router.transitionTo(`${dashboardId}`);
+		if(localStorage.getItem(this.state.user) && JSON.parse(localStorage.getItem(this.state.user)).password===this.state.password){
+			const userId = JSON.parse(localStorage.getItem(this.state.user)).userId;	
+			this.context.router.transitionTo(`/dashboard/${userId}`);
 		}else{
-			alert('Please enter a correct login or password')
+			alert('Пожалуйста, введите корректный логин и пароль')
 		}
 		
 	}

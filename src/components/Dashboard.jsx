@@ -55,7 +55,7 @@ class Dashboard extends React.Component{
     }
 
     componentWillMount(){
-        const localStorageRef = localStorage.getItem('passwords');
+        const localStorageRef = localStorage.getItem(`passwords-${this.props.params.userId}`);
         if(localStorageRef){
             this.setState({
                 passwords: JSON.parse(localStorageRef)
@@ -65,12 +65,17 @@ class Dashboard extends React.Component{
 
     componentWillUpdate(nextProps, nextState){
         console.log({nextProps , nextState})
-        localStorage.setItem('passwords', JSON.stringify(nextState.passwords));
+        localStorage.setItem(`passwords-${this.props.params.userId}`, JSON.stringify(nextState.passwords));
+    }
+
+    exitDashboard(e){
+        e.preventDefault();
+        this.context.router.transitionTo(`/`);
     }
 
     render() {
         return (
-            <div className="dasboard-wrapper">
+            <div className="dashboard-wrapper">
                 <h2>Dashboard</h2>
                 <div className="passwords">
                     <ul className="list-of-passwords">
@@ -82,9 +87,14 @@ class Dashboard extends React.Component{
 					</ul>
                 </div>   
                 <AddForm fieldsNames={this.state.fieldNames}  editPass={this.state.currEditPass} passwords={this.state.passwords} addPassword={this.addPassword.bind(this)} updatePassword={this.updatePassword.bind(this)}/>
+                <a href="#" className="exit" ref={(link) => this.exit = link} onClick={this.exitDashboard.bind(this)}>Exit</a>
             </div>
         )
     }
 }
+
+Dashboard.contextTypes = {
+	router: React.PropTypes.object
+};
 
 export default Dashboard;

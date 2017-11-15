@@ -58,6 +58,9 @@
 .not-found-wrapper h2 {
   text-align: center;
 }
+.dashboard-wrapper {
+  text-align: center;
+}
 .form-wrapper {
   width: 800px;
   margin: 0 auto;
@@ -143,4 +146,17 @@
 }
 .password a.show-password {
   border: solid 2px #008000;
+}
+.exit {
+  display: inline-block;
+  width: 200px;
+  height: 40px;
+  margin-top: 40px;
+  line-height: 40px;
+  font-size: 22px;
+  text-align: center;
+  background: #b23015;
+  color: #fff;
+  border-radius: 15px;
+  text-decoration: none;
 }

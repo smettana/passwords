@@ -8,17 +8,27 @@ class RegisterForm extends React.Component {
 		const passVal = this.passwordInput.value;
 		const logVal = this.loginInput.value;
 		if(passVal===""||logVal===""){
-			alert("Please enter a login and password")
+			alert("Пожалуйста, введите логин и пароль")
 			return
 		}else if(passVal===""){ 
-			alert("Please enter a password")
+			alert("Пожалуйста, введите пароль")
 			return
 		}else if(logVal===""){ 
-			alert("Please enter a login")
+			alert("Пожалуйста, введите логин")
 			return
 		}else{
-			localStorage.setItem(`${logVal}`, passVal);
-			this.context.router.transitionTo(`/${loginId}`);
+			if(localStorage.getItem(logVal)) {
+				alert("Такой логин уже используется");
+				return
+			}else{
+				const id = Date.now();
+				localStorage.setItem(`${logVal}`, JSON.stringify({
+					password:passVal,
+					userId:`${logVal}-${id}`
+				}));
+				this.context.router.transitionTo(`/${loginId}`);
+			}
+			
 		}
 	}
 
