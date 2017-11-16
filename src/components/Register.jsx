@@ -4,7 +4,6 @@ class RegisterForm extends React.Component {
 
     goToDashBoard(e){
         e.preventDefault();
-		const loginId = '';
 		const passVal = this.passwordInput.value;
 		const logVal = this.loginInput.value;
 		if(passVal===""||logVal===""){
@@ -26,7 +25,7 @@ class RegisterForm extends React.Component {
 					password:passVal,
 					userId:`${logVal}-${id}`
 				}));
-				this.context.router.transitionTo(`/${loginId}`);
+				this.context.router.transitionTo(`/dashboard/${logVal}-${id}`);
 			}
 			
 		}
