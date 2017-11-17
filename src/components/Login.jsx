@@ -1,77 +1,70 @@
 import React from 'react';
 
 class LoginForm extends React.Component {
-	constructor(){
-		super();
 
-		this.state = {
-			user:'',
-			password:''
-		}
+	state = {
+		password:'',
+		login:'',
+		inputType:'password'
 	}
 
-    goToRegister(e){
+    goToRegister = (e) =>{
 		e.preventDefault();
 		const registerId = 'register';
         this.context.router.transitionTo(`${registerId}`);
 	}
 
-	goToDashbord(e){
+	goToDashbord = (e) => {
 		e.preventDefault();
-		// const dashboardId = '24';
-		console.log(localStorage.getItem(this.state.user))
-		if(localStorage.getItem(this.state.user) && JSON.parse(localStorage.getItem(this.state.user)).password===this.state.password){
-			const userId = JSON.parse(localStorage.getItem(this.state.user)).userId;	
+		console.log(localStorage.getItem(this.state.login))
+		if(localStorage.getItem(this.state.login) && JSON.parse(localStorage.getItem(this.state.login)).password===this.state.password){
+			const userId = JSON.parse(localStorage.getItem(this.state.login)).userId;	
 			this.context.router.transitionTo(`/dashboard/${userId}`);
 		}else{
-			alert('Пожалуйста, введите корректный логин и пароль')
+			alert('Пожалуйста, введите корректный логин и пароль');
 		}
 		
 	}
 
-	passwordChange(e){		
+	onChange(e){
 		this.setState({
-			password: this.passwordInput.value
+			[e.target.name]: e.target.value
 		});
 	}
 
-	loginChange(e){
-		this.setState({
-			user: this.loginInput.value
-		});
-	}
-
-	togglePassword(e){
+	togglePassword = (e) =>{
 		e.preventDefault();
-		if(this.passwordInput.type === "password"){
-			this.passwordInput.type = "text";
-			this.showPassword.text = "Hide password"
+		if(e.target.text === "Show Password"){
+			this.setState({
+				inputType : "text"
+			});
+			e.target.text = "Hide Password"
 		}else{
-			this.passwordInput.type = "password";
-			this.showPassword.text = "Show password"
+			this.setState({
+				inputType : "password"
+			});
+			e.target.text = "Show Password"
 		}
 	}
 	
     render() {
 		return (
-			<form className="login-form">
+			<form className="login-form" onSubmit={(e)=>this.goToDashBoard(e)}>
 				<h2>Please enter a login and password</h2>
 				<div className="row">
-					<input type="text" placeholder="Login"
-						ref={(input)=>{this.loginInput = input}}
-						onChange={(e)=>this.loginChange(e)}
+					<input type="text" placeholder="Login" name="login"
+						onChange={(e)=>this.onChange(e)}
 					/>
 				</div>
 				<div className="row">
-					<input className="password-input" type="password" placeholder="Password" 
-						ref={(input)=>{this.passwordInput = input}} 
-						onChange={(e)=>this.passwordChange(e)}
+					<input className="password-input" type={this.state.inputType} placeholder="Password" name="password"
+						onChange={(e)=>this.onChange(e)}
 					/>
-					<a href="#" ref={(link)=>{this.showPassword = link}} className="show-password" onClick={(e)=>this.togglePassword(e)}>Show password</a>
+					<a href="#" className="show-password" onClick={(e)=>this.togglePassword(e)}>Show Password</a>
 				</div>
 
-				<button ref={(button)=>{this.storeButton = button}} onClick={(e)=>this.goToDashbord(e)}>Log In</button>
-                <button ref={(button)=>{this.registrationButton = button}} onClick={(e)=>this.goToRegister(e)}>Registration</button>
+				<button>Log In</button>
+                <a href="#" className="go-to-register" onClick={(e)=>this.goToRegister(e)}>Registration</a>
 			</form>
 		);
 	}

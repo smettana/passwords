@@ -4,16 +4,12 @@ import Password from './Password';
 
 
 class Dashboard extends React.Component{
-    constructor(){
-		super();
-
-		this.state = {
-            passwords:{},
-            currEditPass:''
-		}
+    state = {
+        passwords:{},
+        currEditPass:''
     }
     
-    addPassword(password){
+    addPassword = (password) => {
         // update state
         const passwords = {...this.state.passwords};
         // add in new password
@@ -25,7 +21,7 @@ class Dashboard extends React.Component{
         });
     }
 
-    deletePassword(e,password){
+    deletePassword = (e,password) => {
         e.preventDefault();
         // update state
         const passwords = {...this.state.passwords};
@@ -36,21 +32,20 @@ class Dashboard extends React.Component{
         });
     }
 
-    editPassword(e,key){
+    editPassword = (e,key) => {
         e.preventDefault();
         this.setState({
             currEditPass: key
         });
     }
 
-    updatePassword(password){
+    updatePassword = (password) => {
         const passwords = {...this.state.passwords};
-        const string = '';
         passwords[this.state.currEditPass] = password;
         console.log(this.state.currEditPass)
         this.setState({
             passwords: passwords,
-            currEditPass:string
+            currEditPass:''
         });
     }
 
@@ -64,14 +59,14 @@ class Dashboard extends React.Component{
     }
 
     componentWillUpdate(nextProps, nextState){
-        console.log({nextProps , nextState})
         localStorage.setItem(`passwords-${this.props.params.userId}`, JSON.stringify(nextState.passwords));
     }
 
-    exitDashboard(e){
+    exitDashboard = (e) => {
         e.preventDefault();
         this.context.router.transitionTo(`/`);
     }
+
 
     render() {
         return (
@@ -81,13 +76,25 @@ class Dashboard extends React.Component{
                     <ul className="list-of-passwords">
                         {
 							Object.keys(this.state.passwords).map(key=>
-								<Password key={key} index={key} deletePassword={this.deletePassword.bind(this)} editPassword={this.editPassword.bind(this)} details={this.state.passwords[key]}/>
+                                <Password 
+                                    key={key} 
+                                    index={key} 
+                                    deletePassword={this.deletePassword} 
+                                    editPassword={this.editPassword} 
+                                    details={this.state.passwords[key]}
+                                />
 							)
 						}
 					</ul>
                 </div>   
-                <AddForm fieldsNames={this.state.fieldNames}  editPass={this.state.currEditPass} passwords={this.state.passwords} addPassword={this.addPassword.bind(this)} updatePassword={this.updatePassword.bind(this)}/>
-                <a href="#" className="exit" ref={(link) => this.exit = link} onClick={this.exitDashboard.bind(this)}>Exit</a>
+                <AddForm 
+                    fieldsNames={this.state.fieldNames}  
+                    editPass={this.state.currEditPass} 
+                    passwords={this.state.passwords} 
+                    addPassword={this.addPassword} 
+                    updatePassword={this.updatePassword}
+                />
+                <a href="#" className="exit" onClick={(e)=>this.exitDashboard(e)}>Exit</a>
             </div>
         )
     }

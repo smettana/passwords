@@ -2,44 +2,61 @@ import React from 'react';
 
 class RegisterForm extends React.Component {
 
-    goToDashBoard(e){
+	state = {
+		login:'',
+		password:'',
+		inputType:"password"	
+	}
+
+    goToDashBoard = (e) =>{
         e.preventDefault();
-		const passVal = this.passwordInput.value;
-		const logVal = this.loginInput.value;
-		if(passVal===""||logVal===""){
+		// const passVal = this.passwordInput.value;
+		// const logVal = this.loginInput.value;
+		if(this.state.login===""||this.state.password===""){
 			alert("Пожалуйста, введите логин и пароль")
 			return
-		}else if(passVal===""){ 
+		}else if(this.state.password===""){ 
 			alert("Пожалуйста, введите пароль")
 			return
-		}else if(logVal===""){ 
+		}else if(this.state.login===""){ 
 			alert("Пожалуйста, введите логин")
 			return
 		}else{
-			if(localStorage.getItem(logVal)) {
+			if(localStorage.getItem(this.state.login)) {
 				alert("Такой логин уже используется");
 				return
 			}else{
 				const id = Date.now();
-				localStorage.setItem(`${logVal}`, JSON.stringify({
-					password:passVal,
-					userId:`${logVal}-${id}`
+				localStorage.setItem(this.state.login, JSON.stringify({
+					password:this.state.login,
+					userId:`${this.state.login}-${id}`
 				}));
-				this.context.router.transitionTo(`/dashboard/${logVal}-${id}`);
+				this.context.router.transitionTo(`/dashboard/${this.state.login}-${id}`);
 			}
 			
 		}
 	}
 
-	togglePassword(e){
+	togglePassword = (e) =>{
 		e.preventDefault();
-		if(this.passwordInput.type === "password"){
-			this.passwordInput.type = "text";
-			this.showPassword.text = "Hide password"
+		if(e.target.text === "Show Password"){
+			this.setState({
+				inputType:"text"
+			});
+			e.target.text.text = "Hide password"
 		}else{
-			this.passwordInput.type = "password";
-			this.showPassword.text = "Show password"
+			this.setState({
+				inputType:"password"
+			});
+			e.target.text.text = "Show password"
 		}
+	}
+
+	onChange=(e)=>{
+		console.log(e.target.value)
+		this.setState({
+			[e.target.name]:e.target.value
+		})
 	}
 	
     render() {
@@ -47,17 +64,13 @@ class RegisterForm extends React.Component {
 			<form className="register-form" onSubmit={(e)=>this.goToDashBoard(e)}>
 				<h2>Registration</h2>
 				<div className="row">
-					<input type="text" placeholder="Login"
-						ref={(input)=>{this.loginInput = input}}
-					/>
+					<input type="text" onChange={(e)=>this.onChange(e)} placeholder="Login" name="login"/>
 				</div>
 				<div className="row">
-					<input type="password" className="password-input" placeholder="Password"
-						ref={(input)=>{this.passwordInput = input}}
-					/>
-					<a href="#" ref={(link)=>{this.showPassword = link}} className="show-password" onClick={(e)=>this.togglePassword(e)}>Show password</a>
+					<input type={this.state.inputType} onChange={(e)=>this.onChange(e)} className="password-input" placeholder="Password" name="password"/>
+					<a href="#" className="show-password" onClick={(e)=>this.togglePassword(e)}>Show Password</a>
 				</div>
-				<button ref={(button)=>{this.storeButton = button}} type="submit">Registration</button>
+				<button type="submit">Registration</button>
 			</form>
 		);
 	}

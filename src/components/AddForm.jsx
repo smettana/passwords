@@ -1,45 +1,90 @@
 import React from 'react';
 
 class AddForm extends React.Component {
+    state = {
+        fields : {
+            name:'',
+            login:'',
+            password:''
+        }    
+    }
+
+    editPassword = false; 
+
     createPassword(e){
         e.preventDefault();
-        const password = {
-            name:this.name.value,
-            login:this.login.value,
-            password:this.password.value
-        };
+        const fields = {...this.state.fields};
         
         if(this.props.editPass === ''){
-            if(this.name.value==="" || this.login.value==="" || this.password.value===""){
+            if(this.state.fields.name==="" || this.state.fields.login==="" || this.state.fields.password===""){
                 alert('Пожалуйста, заполните все поля');
                 return;
             }else{
-                this.props.addPassword(password);
+                this.props.addPassword(this.state.fields);
+                
+                fields['name'] = '';
+                fields['login'] = '';
+                fields['password'] = '';
+                this.setState({
+                    fields:fields
+                });
             }
         }else{
-            if(this.name.value==="" || this.login.value==="" || this.password.value===""){
+            if(this.state.fields.name==="" || this.state.fields.login==="" || this.state.fields.password===""){
                 alert('Пожалуйста, заполните все поля');
                 return;
             }else{
-                this.props.updatePassword(password);
+                this.props.updatePassword(this.state.fields);
+
+                fields['name'] = '';
+                fields['login'] = '';
+                fields['password'] = '';
+                this.setState({
+                    fields:fields
+                });
+                this.editPassword = false;
             }
             
         }
         
-        this.passwordForm.reset();
     }
+
+    onChange = (e) => {
+        const fields = {...this.state.fields};
+        fields[e.target.name]=e.target.value;
+        this.setState({
+            fields:fields
+        }) 
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log('componentWillReceiveProps');
+        if(nextProps.editPass !== '' && this.editPassword === false){
+            this.editPassword = true
+            const fieldsProps = nextProps.passwords[nextProps.editPass];
+            const fields = { ...this.state.fields };
+            fields['name'] = fieldsProps['name'];
+            fields['login'] = fieldsProps['login'];
+            fields['password'] = fieldsProps['password'];
+            this.setState({
+                fields: fields
+            })
+        }
+    }
+    
+    componentWillUpdate(nextProps, nextState){
+        console.log('componentWillUpdate')
+    }
+
     render() {
         const buttonText = this.props.editPass === '' ? '+ Add Password' : 'Edit Password';
-        const fieldName = this.props.editPass === '' ? 'Site Name' : this.props.passwords[this.props.editPass].name;
-        const fieldLogin = this.props.editPass === '' ? 'Site Login' : this.props.passwords[this.props.editPass].login;
-        const fieldPassword = this.props.editPass === '' ? 'Site Password' : this.props.passwords[this.props.editPass].password;
 
         return (
             <div className="form-wrapper">
-                <form ref={(input)=>{this.passwordForm = input}} className="password-edit" onSubmit={(e)=>this.createPassword(e)}>
-                    <input type="text" placeholder={fieldName} ref={(input) => this.name = input}/>
-                    <input type="text" placeholder={fieldLogin} ref={(input) => this.login = input}/>
-                    <input type="password" placeholder={fieldPassword} ref={(input) => this.password = input}/>
+                <form className="password-edit" onSubmit={(e)=>this.createPassword(e)}>
+                    <input type="text" name="name" value={this.state.fields.name} onChange={this.onChange} placeholder="Site Name"/>
+                    <input type="text" name="login" value={this.state.fields.login} onChange={this.onChange} placeholder="Site Login"/>
+                    <input type="password" name="password" value={this.state.fields.password} onChange={this.onChange} placeholder="Site Password"/>
                     <button type="submit">{buttonText}</button>
                 </form> 
             </div>    
