@@ -1,4 +1,5 @@
 import React from 'react';
+import { Input } from 'antd';
 
 class LoginForm extends React.Component {
 
@@ -8,15 +9,15 @@ class LoginForm extends React.Component {
 		inputType:'password'
 	}
 
-    goToRegister = (e) =>{
+    goToRegister = (e) => {
 		e.preventDefault();
 		const registerId = 'register';
-        this.context.router.transitionTo(`${registerId}`);
+		this.context.router.transitionTo(`${registerId}`);
+		console.log('goToRegister');
 	}
 
-	goToDashbord = (e) => {
+	goToDashBoard = (e) => {
 		e.preventDefault();
-		console.log(localStorage.getItem(this.state.login))
 		if(localStorage.getItem(this.state.login) && JSON.parse(localStorage.getItem(this.state.login)).password===this.state.password){
 			const userId = JSON.parse(localStorage.getItem(this.state.login)).userId;	
 			this.context.router.transitionTo(`/dashboard/${userId}`);
@@ -49,12 +50,11 @@ class LoginForm extends React.Component {
 	
     render() {
 		return (
-			<form className="login-form" onSubmit={(e)=>this.goToDashBoard(e)}>
+			<form className="login-form" onSubmit={(e) => this.goToDashBoard (e)}>
 				<h2>Please enter a login and password</h2>
 				<div className="row">
-					<input type="text" placeholder="Login" name="login"
-						onChange={(e)=>this.onChange(e)}
-					/>
+					<Input type="text" placeholder="Login" name="login"
+						onChange={(e)=>this.onChange(e)} />
 				</div>
 				<div className="row">
 					<input className="password-input" type={this.state.inputType} placeholder="Password" name="password"

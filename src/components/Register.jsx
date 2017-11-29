@@ -10,8 +10,6 @@ class RegisterForm extends React.Component {
 
     goToDashBoard = (e) =>{
         e.preventDefault();
-		// const passVal = this.passwordInput.value;
-		// const logVal = this.loginInput.value;
 		if(this.state.login===""||this.state.password===""){
 			alert("Пожалуйста, введите логин и пароль")
 			return
